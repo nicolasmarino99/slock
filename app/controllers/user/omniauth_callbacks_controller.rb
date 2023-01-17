@@ -15,6 +15,9 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # def passthru
   #   super
   # end
+  def google_oauth2
+    user = User.create_authenticated_user(auth)
+  end
 
   # GET|POST /users/auth/twitter/callback
   # def failure
@@ -27,4 +30,9 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # def after_omniauth_failure_path_for(scope)
   #   super(scope)
   # end
+  private 
+  
+  def auth
+    @auth ||= request.env['omniauth.auth']
+  end
 end
